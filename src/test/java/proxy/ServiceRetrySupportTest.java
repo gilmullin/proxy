@@ -123,7 +123,7 @@ public class ServiceRetrySupportTest {
         List<ServiceResponse> responses = invocationSupport.call(Collections.singletonList(message));
         // Проверим, что нет таймаута
         long duration = Duration.between(beforeCall, Instant.now()).toMillis();
-        Assert.assertTrue(duration > timeBetweenCallMs && duration < 1050);
+        Assert.assertTrue(duration > timeBetweenCallMs && duration < 1100);
         Assert.assertEquals(1, responses.size());
         Assert.assertArrayEquals(new byte[] {4}, responses.get(0).getData());
     }

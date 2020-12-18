@@ -114,23 +114,24 @@ public class AsyncProxy {
             messageQueue.drainTo(tasks, this.batchSize - 1);
 
             List<Message> batch = tasks.stream().map(MessageTask::getMessage).collect(Collectors.toList());
+            List<ServiceResponse> batchResult;
             try {
-                List<ServiceResponse> batchResult = this.serviceRetry.call(batch);
+                batchResult = this.serviceRetry.call(batch);
                 // по контракту call размер batchResult совпадает с batch
-                boolean matchSize = batchResult.size() == batch.size();
-                assert matchSize;
 
-                for (int i = 0; i < batchResult.size(); i++) {
-                    MessageTask task = tasks.get(i);
-                    ServiceResponse response = batchResult.get(i);
-                    // Завершаем футуру результатом из батч-ответа
-                    task.getFuture().complete(response);
-                }
             } catch (Exception e) {
                 for (MessageTask task : tasks) {
                     // Завершаем футуру ошибкой
                     task.getFuture().completeExceptionally(e);
                 }
+                continue;
+            }
+
+            for (int i = 0; i < batchResult.size(); i++) {
+                MessageTask task = tasks.get(i);
+                ServiceResponse response = batchResult.get(i);
+                // Завершаем футуру результатом из батч-ответа
+                task.getFuture().complete(response);
             }
         }
 
