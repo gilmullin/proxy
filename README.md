@@ -6,6 +6,7 @@
 ## Запуск собранной программы
 
 Распаковать build/distributions/proxy-1.0-SNAPSHOT.zip
+
 Запустить bin/proxy
 
 ## Запуск без сборки при помощи gradle
