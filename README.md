@@ -1,12 +1,12 @@
 ## Сборка проекта
 ./gradlew distZip
 
-Дистрибутив будет в build/distributions/txtme-1.0-SNAPSHOT.zip
+Архив с дистрибутивом будет в build/distributions
 
 ## Запуск собранной программы
 
-Распаковать build/distributions/txtme-1.0-SNAPSHOT.zip
-Запустить bin/txtme
+Распаковать build/distributions/proxy-1.0-SNAPSHOT.zip
+Запустить bin/proxy
 
 ## Запуск без сборки при помощи gradle
 ./gradlew run
